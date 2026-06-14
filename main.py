@@ -1,5 +1,6 @@
 hiaracy = {'A':['B','C'],'B':['D','E'],'C':['F','G']}
 value = {'A':3,'B':5,'C':4,'D':2,'E':6,'F':3,'G':7}
+objective = 7
 
 def locate(route):
     locating = 'A'
@@ -13,7 +14,7 @@ def depth_first():
     print("탐색 : A")
     
     while True:
-        if value[now] == 7:
+        if value[now] >= objective:
             return now
             break
         else:
@@ -39,12 +40,14 @@ def width_first():
     same_width = ['A']
     
     while True:
+        before_width = []
         for i in same_width:
             print("탐색 :",i)
-            if value[i] == 7:
+            if value[i] >= objective:
                 return i
                 break
-        before_width = same_width
+            if i in hiaracy:
+                before_width.append(i)
         same_width = []
         for i in before_width:
             same_width.extend(hiaracy[i])
@@ -75,7 +78,7 @@ def maximum_first():
             if value[i] > value[maximum]:
                 maximum = i
         print("탐색 :",maximum)
-        if value[maximum] >= 7:
+        if value[maximum] >= objective:
             return maximum
         if maximum in hiaracy:
             accessible.extend(hiaracy[maximum])
